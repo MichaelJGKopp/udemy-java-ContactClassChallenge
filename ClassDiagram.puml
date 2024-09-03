@@ -1,0 +1,25 @@
+@startuml
+class Contact {
+    'Phone Format: (nnn) nnn-nnnn
+    'Fields
+    - String name
+    - Set<String> emails
+    - Set<String> phones
+
+    'Constructors
+    + Contact(String name)
+    + Contact(String name, String email)
+    + Contact(String name, long phone)
+    + Contact(String name, String email, long phone)
+
+    'Methods
+    + String getName()
+    + String toString()
+
+    + Contact mergeContactData(Contact contact)
+}
+note right of Contact
+    Phone Format: (nnn) nnn-nnnn
+end note
+
+@enduml

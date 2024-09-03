@@ -1,14 +1,13 @@
 package dev.lpa;
 
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class Contact {
 
     private String name;
-    final private Set<String> emails = new HashSet<>();
-    final private Set<String> phones = new HashSet<>();
+    private Set<String> emails = new HashSet<>();
+    private Set<String> phones = new HashSet<>();
 
     public Contact(String name) {
         this(name, null);
@@ -30,7 +29,7 @@ public class Contact {
         if (phone != 0) {
             String phoneStr = String.format("%010d", phone);
             phoneStr = "(%s) %s-%s"
-                    .formatted(phoneStr.substring(0, 3), phoneStr.substring(3, 6), phoneStr.substring(6, 10));
+                    .formatted(phoneStr.substring(0, 3), phoneStr.substring(3, 6), phoneStr.substring(6));
             phones.add(phoneStr);
         }
     }
@@ -39,20 +38,12 @@ public class Contact {
         return name;
     }
 
-    public Set<String> getEmails() {
+/*    public Set<String> getEmails() {
         return new HashSet<>(emails);
     }
 
     public Set<String> getPhones() {
         return new HashSet<>(phones);
-    }
-
-/*    public boolean addEmails(Collection<String> emails) {
-        return this.emails.addAll(emails);
-    }
-
-    public boolean addPhones(Collection<String> phones) {
-        return this.phones.addAll(phones);
     }*/
 
     @Override
@@ -66,19 +57,11 @@ public class Contact {
 
     public Contact mergeContactData(Contact contact) {
 
-/*        Contact mergedContact = new Contact(contact.getName());
-        mergedContact.addEmails(this.emails);
-        mergedContact.addEmails(contact.emails);
-        mergedContact.addPhones(this.phones);
-        mergedContact.addPhones(contact.phones);*/
-
-        Set<String> phonesTemp = new LinkedHashSet<>(contact.getPhones());
-        phonesTemp.addAll(phones);
-        Set<String> emailsTemp = new LinkedHashSet<>(contact.getEmails());
-        emailsTemp.addAll(emails);
-
-        return new Contact(contact.getName(),
-                !emailsTemp.isEmpty() ? emailsTemp.iterator().next() : null,
-                !phonesTemp.isEmpty() ? phoneNumber(phonesTemp.iterator().next()) : 0);
+        Contact mergedContact = new Contact(contact.getName());
+        mergedContact.emails = new HashSet<>(this.emails);
+        mergedContact.phones = new HashSet<>(this.phones);
+        mergedContact.emails.addAll(contact.emails);
+        mergedContact.phones.addAll(contact.phones);
+        return mergedContact;
     }
 }

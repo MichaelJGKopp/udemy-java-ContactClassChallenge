@@ -42,7 +42,38 @@ public class Main {
         Contact robinHood = emailList.get(index);
         robinHood.addEmail("Sherwood Forest");
         robinHood.addEmail("Sherwood Forest");
+        robinHood.replaceEmailIfExists("RHood@sherwoodforest.com",
+                "RHood@sherwoodforest.org");
         System.out.println(robinHood);
+
+        Set<Contact> unionAB = new HashSet<>();
+        unionAB.addAll(emailList);
+        unionAB.addAll(phoneList);
+        printData("(A ∪ B) Union of emails (A) with phones (B)", unionAB);
+
+        Set<Contact> intersectAB = new HashSet<>(emailList);
+        intersectAB.retainAll(phoneList);
+        printData("(A ∩ B) Intersect emails (A) and phones (B)", intersectAB);
+
+        Set<Contact> intersectBA = new HashSet<>(phoneList);
+        intersectBA.retainAll(emailList);
+        printData("(B ∩ A) Intersect phones (B) and emails (A)", intersectBA);
+
+        Set<Contact> AMinusB = new HashSet<>(emailList);
+        AMinusB.removeAll(phoneList);
+        printData("(A - B) emails (A) - phones (B)", AMinusB);
+
+        Set<Contact> BMinusA = new HashSet<>(phoneList);
+        BMinusA.removeAll(emailList);
+        printData("(B - A) phones (B) - emails (A)", BMinusA);
+
+        Set<Contact> symmetricDiff = new HashSet<>(AMinusB);
+        symmetricDiff.addAll(BMinusA);
+        printData("((A - B) ∪ (B - A)) emails (A) and phones (B)", symmetricDiff);
+
+        Set<Contact> symmetricDiff2 = new HashSet<>(unionAB);
+        symmetricDiff2.removeAll(intersectAB);
+        printData("(A ∪ B) - (A ∩ B) emails (A) and phones (B)", symmetricDiff2);
     }
 
     public static void printData(String header, Collection<Contact> contacts) {

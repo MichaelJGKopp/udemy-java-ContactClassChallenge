@@ -1,8 +1,6 @@
 package dev.lpa;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class Main {
@@ -18,7 +16,7 @@ public class Main {
                 Robin Hood, 5647893000
                 Robin Hood, 7899028222
                 Lucy Van Pelt, 5642086852
-                Mickey Mouse 9998887777""";
+                Mickey Mouse, 9998887777""";
 
         String emailData = """
                 Mickey Mouse, mckmouse@gmail.com
@@ -28,16 +26,33 @@ public class Main {
                 Linus Van Pelt, lvpelt2015@gmail.com
                 Duffy Duck, daffy@google.com""";
 
-       List<Contact> phoneContacts = getData(phoneData);
-       phoneContacts.forEach(System.out::println);
-       List<Contact> emailContacts = getData(phoneData);
-       emailContacts.forEach(System.out::println);
-       System.out.println();
+       List<Contact> phoneList = getData(phoneData);
+       printData("Phone List", phoneList);
+       List<Contact> emailList = getData(emailData);
+        printData("Email List", emailList);
+        System.out.println();
 
+        Set<Contact> phoneSet = new HashSet<>(phoneList);
+        printData("Phone Set", phoneSet);
+        Set<Contact> emailSet = new HashSet<>(emailList);
+        printData("Email Set", emailSet);
+        System.out.println();
 
+        int index = emailList.indexOf(new Contact("Robin Hood"));
+        Contact robinHood = emailList.get(index);
+        robinHood.addEmail("Sherwood Forest");
+        robinHood.addEmail("Sherwood Forest");
+        System.out.println(robinHood);
     }
 
-    private static List<Contact> getData(String phoneOrEmailData) {
+    public static void printData(String header, Collection<Contact> contacts) {
+        System.out.println("-------------------------------------------------------------");
+        System.out.println(header);
+        System.out.println("-------------------------------------------------------------");
+        contacts.forEach(System.out::println);
+    }
+
+    public static List<Contact> getData(String phoneOrEmailData) {
         try {
             List<Contact> contacts = new ArrayList<>();
             Scanner scanner = new Scanner(phoneOrEmailData);

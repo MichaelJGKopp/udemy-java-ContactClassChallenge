@@ -1,0 +1,23 @@
+@startuml
+class dev.lpa.Main {
++ {static} void main(String[])
++ {static} void printData(String,Collection<Contact>)
++ {static} List<Contact> getData(String)
+}
+
+class dev.lpa.Contact {
+- String name
+- Set<String> emails
+- Set<String> phones
++ String getName()
++ String toString()
++ {static} long phoneNumber(String)
++ Contact mergeContactData(Contact)
++ boolean equals(Object)
++ int hashCode()
++ void addEmail(String)
++ void replaceEmailIfExists(String,String)
+}
+
+
+@enduml
